@@ -1,6 +1,12 @@
 [
 	{
-		"inputs": [],
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "trustedForwarder",
+				"type": "address"
+			}
+		],
 		"stateMutability": "nonpayable",
 		"type": "constructor"
 	},
@@ -58,6 +64,12 @@
 				"internalType": "string",
 				"name": "identifier",
 				"type": "string"
+			},
+			{
+				"indexed": false,
+				"internalType": "bool",
+				"name": "isGasless",
+				"type": "bool"
 			}
 		],
 		"name": "DocumentRegistered",
@@ -148,9 +160,70 @@
 				"internalType": "string",
 				"name": "identifier",
 				"type": "string"
+			},
+			{
+				"internalType": "bool",
+				"name": "useGasless",
+				"type": "bool"
 			}
 		],
 		"name": "registerDocument",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "bytes32",
+				"name": "documentHash",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "string",
+				"name": "registrantName",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "organization",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "identifier",
+				"type": "string"
+			}
+		],
+		"name": "registerDocumentGasless",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "bytes32",
+				"name": "documentHash",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "string",
+				"name": "registrantName",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "organization",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "identifier",
+				"type": "string"
+			}
+		],
+		"name": "registerDocumentWithGas",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -173,6 +246,11 @@
 				"internalType": "address",
 				"name": "newOwner",
 				"type": "address"
+			},
+			{
+				"internalType": "bool",
+				"name": "useGasless",
+				"type": "bool"
 			}
 		],
 		"name": "transferDocumentOwnership",
@@ -247,6 +325,11 @@
 				"internalType": "string",
 				"name": "identifier",
 				"type": "string"
+			},
+			{
+				"internalType": "bool",
+				"name": "isGasless",
+				"type": "bool"
 			}
 		],
 		"stateMutability": "view",
@@ -310,6 +393,25 @@
 		"type": "function"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "forwarder",
+				"type": "address"
+			}
+		],
+		"name": "isTrustedForwarder",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"inputs": [],
 		"name": "owner",
 		"outputs": [
@@ -330,6 +432,19 @@
 				"internalType": "bool",
 				"name": "",
 				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "trustedForwarder",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
 			}
 		],
 		"stateMutability": "view",
