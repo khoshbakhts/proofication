@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { ethers } from 'ethers';
-import DocumentAuditABI from '../contracts/DocumentAudit.json';
+import DocumentAuditABI from '../abi/DocumentAudit.json';
 
 const Web3Context = createContext({});
 
@@ -11,7 +11,7 @@ export function Web3Provider({ children }) {
   const [isConnecting, setIsConnecting] = useState(false);
   const [error, setError] = useState('');
 
-  const contractAddress = 'YOUR_CONTRACT_ADDRESS'; // Replace with your deployed contract address
+  const contractAddress = '0x3E89Dd0dA31f82bd59A8d75a91298287CF096177'; // Replace with your deployed contract address
 
   const connectWallet = async () => {
     try {
