@@ -1,0 +1,63 @@
+@font-face {
+    font-family: 'Samim';
+    src: url('./fonts/Samim-WOL.woff') format('woff');
+  }
+  
+  :root {
+    --primary: #2563eb;
+    --primary-dark: #1e40af;
+    --secondary: #64748b;
+    --background: #f8fafc;
+    --surface: #ffffff;
+    --error: #ef4444;
+    --success: #22c55e;
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    direction: rtl;
+    font-family: 'Samim', system-ui, sans-serif;
+  }
+  
+  body {
+    background-color: var(--background);
+    color: #1e293b;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  
+  .btn {
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+  }
+  
+  .btn-primary {
+    background-color: var(--primary);
+    color: white;
+  }
+  
+  .btn-primary:hover {
+    background-color: var(--primary-dark);
+  }
+  
+  .btn-secondary {
+    background-color: var(--secondary);
+    color: white;
+  }
+  
+  .card {
+    background-color: var(--surface);
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+    padding: 2rem;
+  }

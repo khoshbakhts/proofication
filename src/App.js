@@ -1,14 +1,17 @@
 import React from 'react';
+import { Web3Provider } from './contexts/Web3Context';
 import Header from './components/Header';
 import RegisterDocument from './components/RegisterDocument';
-import DocumentDetails from './components/DocumentDetails';
 
 export default function App() {
- return (
- <div>
- <Header />
- <RegisterDocument />
- <DocumentDetails />
- </div>
- );
+  return (
+    <Web3Provider>
+      <div className="container">
+        <Header />
+        <main>
+          <RegisterDocument />
+        </main>
+      </div>
+    </Web3Provider>
+  );
 }

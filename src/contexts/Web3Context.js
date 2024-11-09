@@ -1,11 +1,90 @@
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import { ethers } from 'ethers';
+import DocumentAuditABI from '../contracts/DocumentAudit.json';
 
-const Web3Context = createContext(null);
+const Web3Context = createContext({});
 
 export function Web3Provider({ children }) {
- return <Web3Context.Provider value={{}}>{children}</Web3Context.Provider>;
+  const [account, setAccount] = useState('');
+  const [provider, setProvider] = useState(null);
+  const [contract, setContract] = useState(null);
+  const [isConnecting, setIsConnecting] = useState(false);
+  const [error, setError] = useState('');
+
+  const contractAddress = 'YOUR_CONTRACT_ADDRESS'; // Replace with your deployed contract address
+
+  const connectWallet = async () => {
+    try {
+      setIsConnecting(true);
+      setError('');
+
+      if (!window.ethereum) {
+        throw new Error('لطفا افزونه متامسک را نصب کنید');
+      }
+
+      const provider = new ethers.BrowserProvider(window.ethereum);
+      const accounts = await provider.send('eth_requestAccounts', []);
+      const signer = await provider.getSigner();
+      
+      const contract = new ethers.Contract(
+        contractAddress,
+        DocumentAuditABI,
+        signer
+      );
+
+      setAccount(accounts[0]);
+      setProvider(provider);
+      setContract(contract);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setIsConnecting(false);
+    }
+  };
+
+  const disconnectWallet = () => {
+    setAccount('');
+    setProvider(null);
+    setContract(null);
+  };
+
+  useEffect(() => {
+    const handleAccountsChanged = (accounts) => {
+      if (accounts.length === 0) {
+        disconnectWallet();
+      } else {
+        setAccount(accounts[0]);
+      }
+    };
+
+    if (window.ethereum) {
+      window.ethereum.on('accountsChanged', handleAccountsChanged);
+    }
+
+    return () => {
+      if (window.ethereum) {
+        window.ethereum.removeListener('accountsChanged', handleAccountsChanged);
+      }
+    };
+  }, []);
+
+  return (
+    <Web3Context.Provider
+      value={{
+        account,
+        provider,
+        contract,
+        isConnecting,
+        error,
+        connectWallet,
+        disconnectWallet
+      }}
+    >
+      {children}
+    </Web3Context.Provider>
+  );
 }
 
 export function useWeb3() {
- return useContext(Web3Context);
+  return useContext(Web3Context);
 }
