@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useWeb3 } from '../contexts/Web3Context';
 import { keccak256 } from 'ethers';
+import TransactionSuccess from './TransactionSuccess';
 import '../styles/style.css';
 
 export default function RegisterDocument() {
@@ -14,6 +15,7 @@ export default function RegisterDocument() {
   });
   const [file, setFile] = useState(null);
   const [fileHash, setFileHash] = useState('');
+  const [transactionData, setTransactionData] = useState(null);
 
   const handleChange = (e) => {
     setFormData({
@@ -79,8 +81,18 @@ export default function RegisterDocument() {
         formData.organization,
         formData.identifier
       );
-      await tx.wait();
-      alert('سند با موفقیت ثبت شد!');
+      const receipt = await tx.wait();
+      
+      setTransactionData({
+        txHash: receipt.hash,
+        documentHash: formData.documentHash,
+        fileName: file.name,
+        registrantName: formData.registrantName,
+        organization: formData.organization,
+        identifier: formData.identifier,
+        timestamp: Math.floor(Date.now() / 1000),
+        isGasless: false
+      });
     } catch (error) {
       console.error('خطا در ثبت سند:', error);
       alert('خطا در ثبت سند. جزئیات را در کنسول ببینید.');
@@ -99,8 +111,18 @@ export default function RegisterDocument() {
         formData.organization,
         formData.identifier
       );
-      await tx.wait();
-      alert('سند با موفقیت و بدون گس ثبت شد!');
+      const receipt = await tx.wait();
+      
+      setTransactionData({
+        txHash: receipt.hash,
+        documentHash: formData.documentHash,
+        fileName: file.name,
+        registrantName: formData.registrantName,
+        organization: formData.organization,
+        identifier: formData.identifier,
+        timestamp: Math.floor(Date.now() / 1000),
+        isGasless: true
+      });
     } catch (error) {
       console.error('خطا در ثبت سند:', error);
       alert('خطا در ثبت سند. جزئیات را در کنسول ببینید.');
@@ -108,6 +130,11 @@ export default function RegisterDocument() {
       setLoading(false);
     }
   };
+
+  // Show success view if transaction is complete
+  if (transactionData) {
+    return <TransactionSuccess {...transactionData} />;
+  }
 
   return (
     <div className="form-container">
@@ -178,9 +205,9 @@ export default function RegisterDocument() {
             <button
               className="btn btn-gasless"
               onClick={registerGasless}
-              disabled={loading || !gaslessEnabled || !fileHash || !formData.registrantName || !formData.organization || !formData.identifier}
+              disabled={loading || !fileHash || !formData.registrantName || !formData.organization || !formData.identifier}
             >
-              ثبت بدون گس
+              {!account ? 'اتصال کیف پول و ثبت' : 'ثبت بدون پرداخت گس'}
             </button>
 
             <button
@@ -188,7 +215,7 @@ export default function RegisterDocument() {
               onClick={registerWithGas}
               disabled={loading || !fileHash || !formData.registrantName || !formData.organization || !formData.identifier}
             >
-              {account ? 'ثبت با پرداخت گس' : 'اتصال کیف پول و ثبت'}
+              {!account ? 'اتصال کیف پول و ثبت' : 'ثبت با پرداخت گس'}
             </button>
           </div>
         </form>
