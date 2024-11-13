@@ -120,13 +120,6 @@
 		"type": "event"
 	},
 	{
-		"inputs": [],
-		"name": "pauseContract",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
 		"anonymous": false,
 		"inputs": [
 			{
@@ -138,145 +131,6 @@
 		],
 		"name": "Paused",
 		"type": "event"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "bytes32",
-				"name": "documentHash",
-				"type": "bytes32"
-			},
-			{
-				"internalType": "string",
-				"name": "registrantName",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "organization",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "identifier",
-				"type": "string"
-			},
-			{
-				"internalType": "bool",
-				"name": "useGasless",
-				"type": "bool"
-			}
-		],
-		"name": "registerDocument",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "bytes32",
-				"name": "documentHash",
-				"type": "bytes32"
-			},
-			{
-				"internalType": "string",
-				"name": "registrantName",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "organization",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "identifier",
-				"type": "string"
-			}
-		],
-		"name": "registerDocumentGasless",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "bytes32",
-				"name": "documentHash",
-				"type": "bytes32"
-			},
-			{
-				"internalType": "string",
-				"name": "registrantName",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "organization",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "identifier",
-				"type": "string"
-			}
-		],
-		"name": "registerDocumentWithGas",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "renounceOwnership",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "bytes32",
-				"name": "documentHash",
-				"type": "bytes32"
-			},
-			{
-				"internalType": "address",
-				"name": "newOwner",
-				"type": "address"
-			},
-			{
-				"internalType": "bool",
-				"name": "useGasless",
-				"type": "bool"
-			}
-		],
-		"name": "transferDocumentOwnership",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "newOwner",
-				"type": "address"
-			}
-		],
-		"name": "transferOwnership",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "unpauseContract",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
 	},
 	{
 		"anonymous": false,
@@ -426,6 +280,13 @@
 	},
 	{
 		"inputs": [],
+		"name": "pauseContract",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
 		"name": "paused",
 		"outputs": [
 			{
@@ -435,6 +296,138 @@
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "bytes32",
+				"name": "documentHash",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "string",
+				"name": "registrantName",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "organization",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "identifier",
+				"type": "string"
+			},
+			{
+				"internalType": "bool",
+				"name": "useGasless",
+				"type": "bool"
+			}
+		],
+		"name": "registerDocument",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "bytes32",
+				"name": "documentHash",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "string",
+				"name": "registrantName",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "organization",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "identifier",
+				"type": "string"
+			}
+		],
+		"name": "registerDocumentGasless",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "bytes32",
+				"name": "documentHash",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "string",
+				"name": "registrantName",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "organization",
+				"type": "string"
+			},
+			{
+				"internalType": "string",
+				"name": "identifier",
+				"type": "string"
+			}
+		],
+		"name": "registerDocumentWithGas",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "renounceOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "bytes32",
+				"name": "documentHash",
+				"type": "bytes32"
+			},
+			{
+				"internalType": "address",
+				"name": "newOwner",
+				"type": "address"
+			},
+			{
+				"internalType": "bool",
+				"name": "useGasless",
+				"type": "bool"
+			}
+		],
+		"name": "transferDocumentOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "newOwner",
+				"type": "address"
+			}
+		],
+		"name": "transferOwnership",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -448,6 +441,13 @@
 			}
 		],
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [],
+		"name": "unpauseContract",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
