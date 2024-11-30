@@ -15,12 +15,12 @@ export default function Header() {
       path: '/register'
     },
     {
-      label: 'جستجوی سند',
+      label: 'بررسی اصالت',
       icon: <Search className="w-4 h-4" />,
       path: '/search'
     },
     {
-      label: 'تاریخچه',
+      label: 'راهنما',
       icon: <History className="w-4 h-4" />,
       path: '/history'
     }

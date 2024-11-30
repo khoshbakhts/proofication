@@ -1,0 +1,7 @@
+            <button
+              className="btn btn-gasless"
+              onClick={registerGasless}
+              disabled={loading || !fileHash || !formData.registrantName || !formData.organization || !formData.identifier}
+            >
+              {loading ? 'در حال پردازش...' : !account ? 'اتصال کیف پول و ثبت' : 'ثبت بدون پرداخت گس'}
+            </button>

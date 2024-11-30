@@ -22,6 +22,13 @@ export default function RegisterDocument() {
   const [error, setError] = useState('');
   const [checkingDocument, setCheckingDocument] = useState(false);
 
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
   const checkDocumentRegistration = async (hash) => {
     try {
       setCheckingDocument(true);
@@ -111,34 +118,19 @@ export default function RegisterDocument() {
 
   const registerWithGas = async (e) => {
     e.preventDefault();
-    setConnectionStatus('');
     setLoading(true);
 
     try {
-      console.log('Starting registration process...');
-      
       if (!account) {
-        console.log('No account detected, attempting to connect wallet...');
         await connectWallet();
-        return; // Return here to let the useEffect trigger contract initialization
+        return;
       }
 
-      const contractToUse = localContract || contract;
-      
-      if (!contractToUse) {
-        console.log('No contract instance available');
+      if (!contract) {
         throw new Error('قرارداد هوشمند در دسترس نیست. لطفاً اتصال شبکه را بررسی کنید');
       }
 
-      console.log('Using contract at address:', contractAddress);
-      console.log('Registering document with parameters:', {
-        documentHash: formData.documentHash,
-        registrantName: formData.registrantName,
-        organization: formData.organization,
-        identifier: formData.identifier
-      });
-
-      const tx = await contractToUse.registerDocumentWithGas(
+      const tx = await contract.registerDocumentWithGas(
         formData.documentHash,
         formData.registrantName,
         formData.organization,
@@ -146,8 +138,7 @@ export default function RegisterDocument() {
       );
 
       console.log('Transaction submitted:', tx);
-      setConnectionStatus('در حال پردازش تراکنش...');
-
+      
       const receipt = await tx.wait();
       console.log('Transaction receipt:', receipt);
       
@@ -163,17 +154,7 @@ export default function RegisterDocument() {
       });
     } catch (error) {
       console.error('Registration error:', error);
-      let errorMessage = 'خطا در ثبت سند: ';
-      
-      if (error.message.includes('user rejected')) {
-        errorMessage += 'تراکنش توسط کاربر لغو شد';
-      } else if (error.message.includes('insufficient funds')) {
-        errorMessage += 'موجودی ناکافی';
-      } else {
-        errorMessage += error.message;
-      }
-      
-      setConnectionStatus(errorMessage);
+      setError(error.message);
     } finally {
       setLoading(false);
     }
@@ -181,7 +162,6 @@ export default function RegisterDocument() {
 
   const registerGasless = async (e) => {
     e.preventDefault();
-    setConnectionStatus('');
     setLoading(true);
 
     try {
@@ -190,21 +170,21 @@ export default function RegisterDocument() {
         return;
       }
 
-      const contractToUse = localContract || contract;
-      
-      if (!contractToUse) {
+      if (!contract) {
         throw new Error('قرارداد هوشمند در دسترس نیست. لطفاً اتصال شبکه را بررسی کنید');
       }
 
-      const tx = await contractToUse.registerDocumentGasless(
+      const tx = await contract.registerDocumentGasless(
         formData.documentHash,
         formData.registrantName,
         formData.organization,
         formData.identifier
       );
 
-      setConnectionStatus('در حال پردازش تراکنش...');
+      console.log('Transaction submitted:', tx);
+      
       const receipt = await tx.wait();
+      console.log('Transaction receipt:', receipt);
       
       setTransactionData({
         txHash: receipt.hash,
@@ -218,17 +198,7 @@ export default function RegisterDocument() {
       });
     } catch (error) {
       console.error('Registration error:', error);
-      let errorMessage = 'خطا در ثبت سند: ';
-      
-      if (error.message.includes('user rejected')) {
-        errorMessage += 'تراکنش توسط کاربر لغو شد';
-      } else if (error.message.includes('insufficient funds')) {
-        errorMessage += 'موجودی ناکافی';
-      } else {
-        errorMessage += error.message;
-      }
-      
-      setConnectionStatus(errorMessage);
+      setError(error.message);
     } finally {
       setLoading(false);
     }
@@ -338,7 +308,50 @@ export default function RegisterDocument() {
 
       {fileHash && !alreadyRegistered && (
         <form>
-          {/* Your existing form fields */}
+          <div className="form-group">
+            <label>نام ثبت کننده</label>
+            <input
+              type="text"
+              name="registrantName"
+              value={formData.registrantName}
+              onChange={handleChange}
+              placeholder="نام و نام خانوادگی"
+            />
+          </div>
+
+          <div className="form-group">
+            <label>نام سازمان</label>
+            <input
+              type="text"
+              name="organization"
+              value={formData.organization}
+              onChange={handleChange}
+              placeholder="نام سازمان"
+            />
+          </div>
+
+          <div className="form-group">
+            <label>شناسه</label>
+            <input
+              type="text"
+              name="identifier"
+              value={formData.identifier}
+              onChange={handleChange}
+              placeholder="شناسه سند"
+            />
+          </div>
+
+          <div className="button-group">
+
+
+            <button
+              className={`btn ${account ? 'btn-primary' : 'btn-connect'}`}
+              onClick={registerWithGas}
+              disabled={loading || !fileHash || !formData.registrantName || !formData.organization || !formData.identifier}
+            >
+              {loading ? 'در حال پردازش...' : !account ? 'اتصال کیف پول و ثبت' : 'ثبت سند'}
+            </button>
+          </div>
         </form>
       )}
     </div>
